@@ -219,7 +219,7 @@
     }
 </style>
 <body>
-  <div class="container">
+  <div class="container" id="content">
     <!-- Encabezado -->
     <div class="header">
       <h1>Ubicación e IP</h1>
@@ -242,28 +242,26 @@
       <table class="info-table" id="info-table">
         <thead>
           <tr>
-            <th><i class="fas fa-city"></i> Ciudad</th>
-            <th><i class="fas fa-flag"></i> País</th>
-            <th><i class="fas fa-globe-americas"></i> Latitud</th>
-            <th><i class="fas fa-globe-americas"></i> Longitud</th>
-            <th><i class="fas fa-network-wired"></i> Proveedor</th>
+            <th>Ciudad</th>
+            <th>País</th>
+            <th>Latitud</th>
+            <th>Longitud</th>
+            <th>Proveedor</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td data-label="Ciudad" id="city">-</td>
-            <td data-label="País" id="country">-</td>
-            <td data-label="Latitud" id="latitude">-</td>
-            <td data-label="Longitud" id="longitude">-</td>
-            <td data-label="Proveedor" id="isp">-</td>
+            <td id="city">-</td>
+            <td id="country">-</td>
+            <td id="latitude">-</td>
+            <td id="longitude">-</td>
+            <td id="isp">-</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const loading = document.getElementById('loading');
@@ -272,53 +270,57 @@
       const locationTextElement = document.getElementById('location-text');
       const countryFlagElement = document.getElementById('country-flag');
 
-      // Función para obtener el código de país en minúsculas
-      function getCountryCodeLowercase(code) {
-        return code.toLowerCase();
+      // Verificar si el parámetro 'type=json' está en la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const isJsonRequest = urlParams.get('type') === 'json';
+
+      // Función para obtener la información de la API
+      function fetchIPData() {
+        fetch('https://ipapi.co/json/?lang=es')
+          .then(response => response.json())
+          .then(data => {
+            if (isJsonRequest) {
+              // Si se solicitó en formato JSON, mostrar el JSON en la página
+              document.body.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } else {
+              // Si no, mostrar la página HTML normal
+              loading.style.display = 'none';
+              info.style.display = 'block';
+              infoTable.style.display = 'table';
+
+              // Obtener el código del país en minúsculas para la bandera
+              const countryCodeLower = data.country_code.toLowerCase();
+              const flagURL = `https://flagcdn.com/48x36/${countryCodeLower}.png`;
+
+              // Actualizar encabezados con la ubicación y la bandera
+              locationTextElement.textContent = `${data.city}, ${data.country_name}`;
+              countryFlagElement.src = flagURL;
+              countryFlagElement.alt = `Bandera de ${data.country_name}`;
+
+              // Actualizar la IP
+              document.getElementById('ip').textContent = `IP: ${data.ip}`;
+
+              // Rellenar la tabla con la información adicional
+              document.getElementById('city').textContent = data.city || 'No disponible';
+              document.getElementById('country').textContent = data.country_name || 'No disponible';
+              document.getElementById('latitude').textContent = data.latitude || 'No disponible';
+              document.getElementById('longitude').textContent = data.longitude || 'No disponible';
+              document.getElementById('isp').textContent = data.org || 'No disponible';
+            }
+          })
+          .catch(error => {
+            // En caso de error, ocultar el texto de carga y mostrar mensaje de error
+            loading.style.display = 'none';
+            info.style.display = 'block';
+            document.getElementById('location-text').textContent = 'No disponible';
+            document.getElementById('country-flag').src = '';
+            document.getElementById('ip').textContent = 'IP: No disponible';
+            console.error('Error al obtener la información:', error);
+          });
       }
 
-      // Llamada a la API pública para obtener la información del visitante en español
-      fetch('https://ipapi.co/json/?lang=es')
-        .then(response => response.json())
-        .then(data => {
-          // Ocultar el texto de carga
-          loading.style.display = 'none';
-
-          // Mostrar la información principal y la tabla
-          info.style.display = 'block';
-          infoTable.style.display = 'table';
-
-          // Obtener el código del país en minúsculas para la bandera
-          const countryCodeLower = getCountryCodeLowercase(data.country_code);
-
-          // Construir la URL de la bandera
-          const flagURL = https://flagcdn.com/48x36/${countryCodeLower}.png;
-
-          // Actualizar encabezados con la ubicación y la bandera
-          locationTextElement.textContent = ${data.city}, ${data.country_name};
-          countryFlagElement.src = flagURL;
-          countryFlagElement.alt = Bandera de ${data.country_name};
-
-          // Actualizar la IP
-          const ipText = IP: ${data.ip};
-          document.getElementById('ip').textContent = ipText;
-
-          // Rellenar la tabla con la información adicional
-          document.getElementById('city').textContent = data.city || 'No disponible';
-          document.getElementById('country').textContent = data.country_name || 'No disponible';
-          document.getElementById('latitude').textContent = data.latitude || 'No disponible';
-          document.getElementById('longitude').textContent = data.longitude || 'No disponible';
-          document.getElementById('isp').textContent = data.org || 'No disponible';
-        })
-        .catch(error => {
-          // En caso de error, ocultar el texto de carga y mostrar mensaje de error
-          loading.style.display = 'none';
-          info.style.display = 'block';
-          document.getElementById('location-text').textContent = 'No disponible';
-          document.getElementById('country-flag').src = '';
-          document.getElementById('ip').textContent = 'IP: No disponible';
-          console.error('Error al obtener la información:', error);
-        });
+      // Llamar a la función para obtener los datos
+      fetchIPData();
     });
   </script>
 </body>
