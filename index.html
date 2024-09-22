@@ -1,42 +1,319 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Bootstrap Template">
-	<meta name="author" content="Edwin and Free contributors">
-	<title>Bootstrap Template</title>
-	<!-- FAVICONS -->
-	<link rel="apple-touch-icon" href="img/favicons/apple-touch-icon.png" sizes="180x180">
-	<link rel="icon" href="img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-	<link rel="icon" href="img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="img/favicons/favicon.ico">
-	<meta name="theme-color" content="#000000">
-	<!-- STYLESHEET -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Herramienta Profesional de Ubicación e IP">
+  <meta name="author" content="Edwin y colaboradores">
+  <title>Herramienta de Ubicación e IP</title>
+  
+  <!-- FAVICONS -->
+  <link rel="apple-touch-icon" href="img/favicons/apple-touch-icon.png" sizes="180x180">
+  <link rel="icon" href="img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="img/favicons/favicon.ico">
+  <meta name="theme-color" content="#ffffff">
+  
+  <!-- Fuentes y Estilos -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Iconos de Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papc4F0fYkIYt6P6yQzMv59d3VxSg8VVz6KjXfqihxzgSZ0AqDnWv8HPvYqXmpEJcPUsT5+N6ItCqZPvG3CxPg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <style>
+    :root {
+      --primary-color: #20c997; /* Color Teal */
+      --secondary-color: #f5f7fa;
+      --text-color: #333333;
+      --background-color: #ffffff;
+      --border-color: #e0e0e0;
+      --table-header-bg: #20c997;
+      --table-header-text: #ffffff;
+      --spinner-color: #20c997;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: var(--background-color);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      max-width: 900px;
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-weight: 600;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      color: #666666;
+      margin: 0;
+    }
+
+    .info {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .info h2,
+    .info h3 {
+      margin: 10px 0;
+      font-weight: 400;
+      color: var(--text-color);
+      transition: opacity 0.5s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info h2 .flag-icon {
+      margin-left: 10px;
+      width: 24px;
+      height: 18px;
+    }
+
+    .spinner-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 150px;
+    }
+
+    /* Estilo para el texto de carga */
+    .loading-text {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+
+    .info-table {
+      display: none;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid var(--border-color);
+    }
+
+    th {
+      background-color: var(--table-header-bg);
+      color: var(--table-header-text);
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    /* Estilos para dispositivos móviles */
+    @media (max-width: 576px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      th,
+      td {
+        padding: 10px;
+      }
+
+      /* Hacer que la tabla se muestre como bloques en móviles */
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+      }
+
+      thead tr {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #ffffff;
+      }
+
+      td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: 600;
+        color: var(--table-header-bg);
+      }
+    }
+  </style>
 </head>
 
 <body>
-	<div class="site-frame">
+  <div class="container">
+    <!-- Encabezado -->
+    <div class="header">
+      <h1>Herramienta de Ubicación e IP</h1>
+      <p>Obtén información detallada sobre tu ubicación y dirección IP</p>
+    </div>
 
-		<!-- =====[HEADER]===== -->
-		<header id="header" class="site-header"></header>
+    <!-- Texto de carga -->
+    <div id="loading" class="spinner-container">
+      <div class="loading-text">Cargando...</div>
+    </div>
 
-		<!-- =====[PAGE]===== -->
-		<div class="site-page"></div>
+    <!-- Información Principal -->
+    <div class="info" id="info" style="display: none;">
+      <h2 id="location">Ubicación: <span id="location-text"></span> <img id="country-flag" class="flag-icon" src="" alt="Bandera"></h2>
+      <h3 id="ip">IP: </h3>
+    </div>
 
-		<!-- =====[FOOTER]===== -->
-		<footer id="footer" class="site-footer"></footer>
+    <!-- Tabla con información adicional -->
+    <div class="table-responsive">
+      <table class="info-table" id="info-table">
+        <thead>
+          <tr>
+            <th><i class="fas fa-city"></i> Ciudad</th>
+            <th><i class="fas fa-flag"></i> País</th>
+            <th><i class="fas fa-globe-americas"></i> Latitud</th>
+            <th><i class="fas fa-globe-americas"></i> Longitud</th>
+            <th><i class="fas fa-network-wired"></i> Proveedor ISP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Ciudad" id="city">-</td>
+            <td data-label="País" id="country">-</td>
+            <td data-label="Latitud" id="latitude">-</td>
+            <td data-label="Longitud" id="longitude">-</td>
+            <td data-label="Proveedor ISP" id="isp">-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-	</div>
+  <!-- Scripts -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loading = document.getElementById('loading');
+      const info = document.getElementById('info');
+      const infoTable = document.getElementById('info-table');
+      const locationTextElement = document.getElementById('location-text');
+      const countryFlagElement = document.getElementById('country-flag');
 
-	<!-- =====[SCRIPT]===== -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<script src="js/bootstrap.bundle.min.js"></script>
-	<script src="js/script.js"></script>
+      // Función para obtener el código de país en minúsculas
+      function getCountryCodeLowercase(code) {
+        return code.toLowerCase();
+      }
+
+      // Llamada a la API pública para obtener la información del visitante en español
+      fetch('https://ipapi.co/json/?lang=es')
+        .then(response => response.json())
+        .then(data => {
+          // Ocultar el texto de carga
+          loading.style.display = 'none';
+
+          // Mostrar la información principal y la tabla
+          info.style.display = 'block';
+          infoTable.style.display = 'table';
+
+          // Obtener el código del país en minúsculas para la bandera
+          const countryCodeLower = getCountryCodeLowercase(data.country_code);
+
+          // Construir la URL de la bandera
+          const flagURL = `https://flagcdn.com/48x36/${countryCodeLower}.png`;
+
+          // Actualizar encabezados con la ubicación y la bandera
+          locationTextElement.textContent = `${data.city}, ${data.country_name}`;
+          countryFlagElement.src = flagURL;
+          countryFlagElement.alt = `Bandera de ${data.country_name}`;
+
+          // Actualizar la IP
+          const ipText = `IP: ${data.ip}`;
+          document.getElementById('ip').textContent = ipText;
+
+          // Rellenar la tabla con la información adicional
+          document.getElementById('city').textContent = data.city || 'No disponible';
+          document.getElementById('country').textContent = data.country_name || 'No disponible';
+          document.getElementById('latitude').textContent = data.latitude || 'No disponible';
+          document.getElementById('longitude').textContent = data.longitude || 'No disponible';
+          document.getElementById('isp').textContent = data.org || 'No disponible';
+        })
+        .catch(error => {
+          // En caso de error, ocultar el texto de carga y mostrar mensaje de error
+          loading.style.display = 'none';
+          info.style.display = 'block';
+          document.getElementById('location-text').textContent = 'No disponible';
+          document.getElementById('country-flag').src = '';
+          document.getElementById('ip').textContent = 'IP: No disponible';
+          console.error('Error al obtener la información:', error);
+        });
+    });
+  </script>
 </body>
 
 </html>
