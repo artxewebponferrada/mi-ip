@@ -6,45 +6,34 @@
   <title>Ubicación e IP</title>
 </head>
 <body>
-  <div class="container" id="content">
-    <!-- Aquí iría el contenido HTML si no se requiere JSON -->
-  </div>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Verificar si el parámetro 'type=json' está en la URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const isJsonRequest = urlParams.get('type') === 'json';
 
       // Función para obtener la información de la API
       function fetchIPData() {
         fetch('https://ipapi.co/json/?lang=es')
           .then(response => response.json())
           .then(data => {
-            if (isJsonRequest) {
-              // Si se solicitó JSON, mostrar el resultado como JSON directamente
-              const jsonData = {
-                "status": "success",
-                "country": data.country_name,
-                "countryCode": data.country_code,
-                "region": data.region,
-                "regionName": data.region,
-                "city": data.city,
-                "zip": data.postal,
-                "lat": data.latitude,
-                "lon": data.longitude,
-                "timezone": data.timezone,
-                "isp": data.org,
-                "org": data.org,
-                "as": data.as,
-                "query": data.ip
-              };
-              // Reemplaza el contenido del body con el JSON formateado
-              document.body.innerHTML = `<pre>${JSON.stringify(jsonData, null, 2)}</pre>`;
-            } else {
-              // Aquí puedes dejar el código que renderiza la página HTML normal si no es JSON
-              document.getElementById('content').innerHTML = '<h1>Mostrar HTML aquí</h1>';
-            }
+            // Construir el JSON de respuesta
+            const jsonData = {
+              "status": "success",
+              "country": data.country_name,
+              "countryCode": data.country_code,
+              "region": data.region,
+              "regionName": data.region,
+              "city": data.city,
+              "zip": data.postal,
+              "lat": data.latitude,
+              "lon": data.longitude,
+              "timezone": data.timezone,
+              "isp": data.org,
+              "org": data.org,
+              "as": data.as,
+              "query": data.ip
+            };
+
+            // Mostrar el resultado en JSON formateado
+            document.body.innerHTML = `<pre>${JSON.stringify(jsonData, null, 2)}</pre>`;
           })
           .catch(error => {
             console.error('Error al obtener la información:', error);
