@@ -292,15 +292,15 @@
           const countryCodeLower = getCountryCodeLowercase(data.country_code);
 
           // Construir la URL de la bandera
-          const flagURL = https://flagcdn.com/48x36/${countryCodeLower}.png;
+          const flagURL = `https://flagcdn.com/48x36/${countryCodeLower}.png`;
 
           // Actualizar encabezados con la ubicación y la bandera
-          locationTextElement.textContent = ${data.city}, ${data.country_name};
+          locationTextElement.textContent = `${data.city}, ${data.country_name}`;
           countryFlagElement.src = flagURL;
-          countryFlagElement.alt = Bandera de ${data.country_name};
+          countryFlagElement.alt = `Bandera de ${data.country_name}`;
 
           // Actualizar la IP
-          const ipText = IP: ${data.ip};
+          const ipText = `IP: ${data.ip}`;
           document.getElementById('ip').textContent = ipText;
 
           // Rellenar la tabla con la información adicional
