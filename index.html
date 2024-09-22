@@ -22,7 +22,193 @@
   <!-- Iconos de Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papc4F0fYkIYt6P6yQzMv59d3VxSg8VVz6KjXfqihxzgSZ0AqDnWv8HPvYqXmpEJcPUsT5+N6ItCqZPvG3CxPg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+<style>
+    :root {
+      --primary-color: #20c997; /* Color Teal */
+      --secondary-color: #f5f7fa;
+      --text-color: #333333;
+      --background-color: #ffffff;
+      --border-color: #e0e0e0;
+      --table-header-bg: #20c997;
+      --table-header-text: #ffffff;
+      --spinner-color: #20c997;
+    }
 
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: var(--background-color);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      max-width: 900px;
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-weight: 600;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      color: #666666;
+      margin: 0;
+    }
+
+    .info {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .info h2,
+    .info h3 {
+      margin: 10px 0;
+      font-weight: 400;
+      color: var(--text-color);
+      transition: opacity 0.5s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info h2 img {
+      margin-left: 10px;
+      width: 24px;
+      height: 18px;
+    }
+
+    .spinner-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 150px;
+    }
+
+    /* Estilo para el texto de carga */
+    .loading-text {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+
+    .info-table {
+      display: none;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid var(--border-color);
+    }
+
+    th {
+      background-color: var(--table-header-bg);
+      color: var(--table-header-text);
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    /* Estilos para dispositivos móviles */
+    @media (max-width: 576px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      th,
+      td {
+        padding: 10px;
+      }
+
+      /* Hacer que la tabla se muestre como bloques en móviles */
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+      }
+
+      thead tr {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #ffffff;
+      }
+
+      td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: 600;
+        color: var(--table-header-bg);
+      }
+    }
+</style>
 <body>
   <div class="container">
     <!-- Encabezado -->
