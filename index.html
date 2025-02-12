@@ -3,103 +3,71 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>📍 Ubicación e IP | Artxeweb</title>
   <meta name="description" content="Herramienta de Ubicación e IP">
   <meta name="author" content="Edwin y colaboradores">
-  <title>📍 Ubicación e IP | Artxeweb</title>
-  
+
   <!-- FAVICONS -->
   <link rel="apple-touch-icon" href="img/favicons/apple-touch-icon.png" sizes="180x180">
   <link rel="icon" href="img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
   <link rel="icon" href="img/favicons/favicon.ico">
   <meta name="theme-color" content="#ffffff">
-  
-  <!-- Fuentes: Inter para el cuerpo y Orbitron para títulos -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-  
+
+  <!-- Fuente Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  
+
   <!-- Iconos de Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papc4F0fYkIYt6P6yQzMv59d3VxSg8VVz6KjXfqihxzgSZ0AqDnWv8HPvYqXmpEJcPUsT5+N6ItCqZPvG3CxPg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-papc4F0fYkIYt6P6yQzMv59d3VxSg8VVz6KjXfqihxzgSZ0AqDnWv8HPvYqXmpEJcPUsT5+N6ItCqZPvG3CxPg==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <style>
     :root {
-      --primary-color: #00d1ff; /* Azul neón */
-      --secondary-color: #1e1e1e; /* Fondo oscuro */
-      --text-color: #e0e0e0;
-      --glass-bg: rgba(255, 255, 255, 0.1);
-      --glass-border: rgba(255, 255, 255, 0.2);
-      --table-header-bg: #00d1ff;
-      --table-header-text: #ffffff;
+      --primary-color: #007bff;    /* Acento azul */
+      --secondary-color: #6c757d;  /* Gris para textos secundarios */
+      --bg-color: #f8f9fa;         /* Fondo claro */
+      --card-bg: #ffffff;          /* Fondo blanco para la card */
+      --border-color: #dee2e6;     /* Borde sutil */
     }
 
     body {
+      background-color: var(--bg-color);
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #141e30, #243b55);
-      color: var(--text-color);
-      min-height: 100vh;
+      color: var(--secondary-color);
       margin: 0;
       padding: 20px;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      min-height: 100vh;
     }
 
-    .container {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 40px;
-      max-width: 900px;
+    .card-container {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      max-width: 800px;
       width: 100%;
-      transition: transform 0.3s ease;
+      margin: auto;
     }
 
-    .container:hover {
-      transform: translateY(-5px);
-    }
-
-    .header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .header h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      font-size: 2.5rem;
-      margin-bottom: 10px;
+    .card-title {
+      font-size: 2rem;
+      font-weight: 600;
       color: var(--primary-color);
-    }
-
-    .header p {
-      font-size: 1.1rem;
-      color: var(--text-color);
-      margin: 0;
-    }
-
-    .info {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
     }
 
-    .info h2,
-    .info h3 {
-      margin: 10px 0;
-      font-weight: 400;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .info h2 img {
-      margin-left: 10px;
-      width: 24px;
-      height: 18px;
+    .card-subtitle {
+      text-align: center;
+      font-size: 1rem;
+      margin-bottom: 20px;
     }
 
     .spinner-container {
@@ -115,84 +83,98 @@
       font-weight: 500;
     }
 
-    .info-table {
+    .info-section {
       display: none;
-      animation: fadeIn 1s ease-in-out;
+      text-align: center;
+      margin-bottom: 20px;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .info-section h2 {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 5px;
+    }
+
+    .info-section h3 {
+      font-size: 1rem;
+      color: var(--secondary-color);
+    }
+
+    .flag-icon {
+      width: 24px;
+      height: auto;
+      margin-left: 8px;
+    }
+
+    .table-responsive {
+      display: none;
     }
 
     table {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
+      margin-top: 15px;
     }
 
     th, td {
-      padding: 15px;
+      padding: 10px;
       text-align: center;
-      border: 1px solid var(--glass-border);
+      border: 1px solid var(--border-color);
     }
 
     th {
-      background-color: var(--table-header-bg);
-      color: var(--table-header-text);
-      font-weight: 600;
-      position: sticky;
-      top: 0;
-      z-index: 1;
+      background-color: var(--primary-color);
+      color: #fff;
+      font-weight: 500;
     }
 
     tr:nth-child(even) {
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: #f1f3f5;
     }
 
-    /* Ajustes para dispositivos móviles */
+    /* Ajustes responsivos para dispositivos móviles */
     @media (max-width: 576px) {
-      .header h1 { font-size: 2rem; }
-      .info * { font-size: 0.9rem; }
-      th, td { padding: 10px; }
-      table, thead, tbody, th, td, tr { display: block; }
-      thead tr { display: none; }
+      th, td {
+        padding: 8px;
+      }
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      thead {
+        display: none;
+      }
       tr {
         margin-bottom: 15px;
-        border: 1px solid var(--glass-border);
+        border: 1px solid var(--border-color);
         border-radius: 8px;
         padding: 10px;
-        background-color: var(--glass-bg);
+        background: var(--card-bg);
       }
       td {
-        border: none;
+        text-align: right;
         position: relative;
         padding-left: 50%;
-        text-align: left;
       }
       td::before {
         content: attr(data-label);
         position: absolute;
         left: 15px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        font-weight: 600;
-        color: var(--table-header-bg);
+        text-align: left;
+        font-weight: bold;
+        color: var(--primary-color);
       }
     }
 
     footer {
-      margin-top: 30px;
       text-align: center;
-      color: var(--text-color);
+      margin-top: auto;
+      padding-top: 20px;
       font-size: 0.9rem;
     }
 
     footer a {
       color: var(--primary-color);
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 500;
     }
 
     footer a:hover {
@@ -201,27 +183,27 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Encabezado -->
-    <div class="header">
-      <h1>Ubicación e IP</h1>
-      <p>Obtén información sobre tu ubicación y dirección IP</p>
-    </div>
+  <div class="card-container">
+    <h1 class="card-title">Ubicación e IP</h1>
+    <p class="card-subtitle">Obtén información sobre tu ubicación y dirección IP</p>
 
-    <!-- Texto de carga -->
+    <!-- Sección de carga -->
     <div id="loading" class="spinner-container">
       <div class="loading-text"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
     </div>
 
-    <!-- Información Principal -->
-    <div class="info" id="info" style="display: none;">
-      <h2 id="location">Ubicación: <span id="location-text"></span> <img id="country-flag" class="flag-icon" src="" alt="Bandera"></h2>
+    <!-- Sección de información -->
+    <div id="info" class="info-section">
+      <h2 id="location">
+        Ubicación: <span id="location-text"></span>
+        <img id="country-flag" class="flag-icon" src="" alt="Bandera">
+      </h2>
       <h3 id="ip">IP: </h3>
     </div>
 
-    <!-- Tabla con información adicional -->
-    <div class="table-responsive">
-      <table class="info-table" id="info-table">
+    <!-- Tabla de información adicional -->
+    <div class="table-responsive" id="info-table-container">
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th><i class="fas fa-city"></i> Ciudad</th>
@@ -243,52 +225,42 @@
       </table>
     </div>
   </div>
-  
+
   <footer>
     Hecho con <i class="fas fa-heart text-danger"></i> por <a href="https://artxeweb.pages.dev" target="_blank">Artxeweb</a>
   </footer>
-  
+
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const loading = document.getElementById('loading');
       const info = document.getElementById('info');
-      const infoTable = document.getElementById('info-table');
+      const tableContainer = document.getElementById('info-table-container');
       const locationTextElement = document.getElementById('location-text');
       const countryFlagElement = document.getElementById('country-flag');
 
-      // Función para obtener el código de país en minúsculas
+      // Función para convertir el código del país a minúsculas
       function getCountryCodeLowercase(code) {
         return code.toLowerCase();
       }
 
-      // Llamada a la API pública para obtener la información del visitante en español
+      // Solicitar datos a la API
       fetch('https://ipapi.co/json/?lang=es')
         .then(response => response.json())
         .then(data => {
-          // Ocultar el texto de carga
           loading.style.display = 'none';
-
-          // Mostrar la información principal y la tabla
           info.style.display = 'block';
-          infoTable.style.display = 'table';
+          tableContainer.style.display = 'block';
 
-          // Obtener el código del país en minúsculas para la bandera
           const countryCodeLower = getCountryCodeLowercase(data.country_code);
-
-          // Construir la URL de la bandera
           const flagURL = `https://flagcdn.com/48x36/${countryCodeLower}.png`;
 
-          // Actualizar encabezados con la ubicación y la bandera
           locationTextElement.textContent = `${data.city}, ${data.country_name}`;
           countryFlagElement.src = flagURL;
           countryFlagElement.alt = `Bandera de ${data.country_name}`;
 
-          // Actualizar la IP
           document.getElementById('ip').textContent = `IP: ${data.ip}`;
-
-          // Rellenar la tabla con la información adicional
           document.getElementById('city').textContent = data.city || 'No disponible';
           document.getElementById('country').textContent = data.country_name || 'No disponible';
           document.getElementById('latitude').textContent = data.latitude || 'No disponible';
@@ -296,7 +268,6 @@
           document.getElementById('isp').textContent = data.org || 'No disponible';
         })
         .catch(error => {
-          // En caso de error, ocultar el texto de carga y mostrar mensaje de error
           loading.style.display = 'none';
           info.style.display = 'block';
           document.getElementById('location-text').textContent = 'No disponible';
